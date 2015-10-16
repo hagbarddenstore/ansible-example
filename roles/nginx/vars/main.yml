@@ -1,0 +1,4 @@
+---
+nginx_pkgs:
+  - nginx
+nginx_service_name: nginx

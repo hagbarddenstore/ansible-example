@@ -1,0 +1,5 @@
+---
+nginx_sites:
+  - name: staging.company.com
+    server_name: staging.company.com
+    root: /var/www/company.com

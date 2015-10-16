@@ -1,0 +1,4 @@
+---
+nginx_pkg_state: installed
+nginx_service_start: started
+nginx_service_enabled: yes

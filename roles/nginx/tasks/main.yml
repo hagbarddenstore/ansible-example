@@ -1,0 +1,31 @@
+---
+- name: ensure nginx is installed
+  apt:
+    name="{{ item }}"
+    state="{{ nginx_pkg_state }}"
+    update_cache=yes
+  with_items: nginx_pkgs
+  tags: install packages
+
+- name: ensure nginx is configured
+  template:
+    src="nginx.conf.j2"
+    dest="/etc/nginx/nginx.conf"
+  tags: configuration
+  notify: reload nginx
+
+- name: ensure all sites are configured
+  tags: configuration
+  template:
+    src="site.conf.j2"
+    dest="/etc/nginx/sites-enabled/{{ item.name }}.conf"
+  with_items: nginx_sites
+  tags: configuration
+  notify: reload nginx
+
+- name: ensure nginx is running
+  servce:
+    name="{{ nginx_service_name }}"
+    state="{{ nginx_service_state }}"
+    enabled="{{ nginx_service_enabled }}"
+  tags: service
